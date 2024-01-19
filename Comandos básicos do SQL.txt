@@ -1,0 +1,31 @@
+Comandos básicos do SQL
+Se você está mergulhando no mundo dos bancos de dados, entender os comandos básicos do SQL é como aprender as notas musicais para tocar uma melodia de dados. Vamos desvendar esses comandos essenciais e mostrar como utilizá-los para transformar seu entendimento de dados.
+
+1. SELECT: A Arte da Busca de Dados. O comando SELECT é o maestro da busca de dados. Quer recuperar informações específicas de uma tabela? Este é o seu comando. Veja um exemplo básico:
+
+SELECT nome, idade FROM clientes WHERE cidade = 'São Paulo';
+2. INSERT: Adicionando Dados à Festa. O comando INSERT permite que você adicione novos registros à sua tabela. Um exemplo simples:
+
+INSERT INTO produtos (nome, preço) VALUES ('Laptop', 1200);
+3. UPDATE: A Magia das Atualizações. Precisa fazer alterações nos dados existentes? O comando UPDATE é seu aliado. Exemplo:
+
+UPDATE funcionarios SET salario = salario * 1.1 WHERE cargo = 'Gerente';
+4. DELETE: A Limpeza Cirúrgica. Para remover dados indesejados, o comando DELETE entra em cena. Aqui está um exemplo direto:
+
+DELETE FROM pedidos WHERE status = 'Cancelado';
+5. CREATE TABLE: Construindo o Palco. O comando CREATE TABLE permite que você crie a estrutura de suas tabelas. Veja como criar uma tabela de clientes:
+
+CREATE TABLE clientes (
+  id INT PRIMARY KEY,
+  nome VARCHAR(50),
+  email VARCHAR(50),
+  idade INT
+
+)
+6. ALTER TABLE: A Evolução Estrutural.  O comando ALTER TABLE permite que você faça alterações na estrutura de uma tabela existente. Se precisar adicionar uma nova coluna, por exemplo:
+
+ALTER TABLE produtos ADD COLUMN data_cadastro DATE;
+7. SELECT DISTINCT: A Busca pela Singularidade. Às vezes, você quer ver apenas valores únicos em uma coluna. O comando SELECT DISTINCT faz isso brilhantemente. Exemplo:
+
+SELECT DISTINCT categoria FROM produtos;
+Existem 7 notas musicais e estes são os 7 acordes básicos do SQL, mas há muito mais para explorar. À medida que você se aprofunda, descobrirá os segredos dos JOINs, GROUP BY e outros comandos avançados.

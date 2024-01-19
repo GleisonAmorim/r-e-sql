@@ -1,0 +1,341 @@
+setwd("C:/Users/gle/Downloads/houses")
+
+df.aluguel = read.csv("./houses_to_rent_v2.csv", header = TRUE, sep=";")
+#variavel    comando para ler    arquivo         cabeçálio = verdadeiro definindo o separador;
+
+head(df.aluguel)
+summary(df.aluguel)
+names(df.aluguel)
+
+
+
+
+2 Conceitos Básicos
+## ── Attaching packages ───────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.1 ──
+## ✓ ggplot2 3.3.4     ✓ purrr   0.3.4
+## ✓ tibble  3.1.4     ✓ dplyr   1.0.7
+## ✓ tidyr   1.1.3     ✓ stringr 1.4.0
+## ✓ readr   1.4.0     ✓ forcats 0.5.1
+## ── Conflicts ──────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+Entenda o R como uma grande calculadora científica cheia de botões, mas, ao invés de apertar os botões, você irá escrever os comandos. Ou seja, aprender R significa se familiarizar com os comandos e saber quando usá-los. Todos os comandos são baseados em inglês e seus nomes, normalmente, dão dicas a respeito do seu uso.
+
+2.1 Console
+O console é uma das quatro partes principais do RStudio. Lá é onde você vai digitar suas ordens (comandos) e também é onde o R vai “responder.” Para que o R possa interpretar corretamente, será necessário que você conheça a sintaxe da linguagem e a escrita correta dos comandos.
+
+Olhando para o console, você verá o símbolo >. Este símbolo indica a linha onde você deve inserir os comandos. Clique nesse símbolo para posicionar o cursor na linha de comandos e digite seu primeiro comando em R: 2 * 3. Digite e aperte enter. Você verá o seguinte resultado:
+
+## [1] 6
+Além de outras funcionalidades mais interessantes, o R é como uma grande calculadora científica, como apontado anteriormente. Para entender melhor esse conceito, vamos exercitar um pouco o console de comandos. Digite um por um os seguintes comandos e acompanhe os resultados:
+
+7 * 9 + 2 * 6
+2.5 * 4
+(50 + 7)/(8 * (3 - 5/2))
+3 ^ 4
+Repare que, na medida em que executa os comandos, o R vai respondendo. Esse é o comportamento básico do console, muito utilizado para obter-se resultados rápidos de comandos específicos.
+
+Uma funcionalidade importante é o fato de que o R guarda um histórico dos últimos comandos executados e para acessá-los basta apertar a seta para cima no teclado.
+
+2.2 Scripts
+Enquanto no console seus comandos são executados na medida em que você os “envia” com a ordem enter, em um script você ordena a execução de uma sequência de comandos, escritos previamente, um seguido do outro. Esses scripts são escritos no editor de códigos do RStudio. Para entender melhor, localize o editor de códigos no RStudio e copie os mesmos comandos anteriores, executados no console. No editor de códigos, a ordem para a execução dos comandos não é o enter, para executá-los, clique em Source, no canto superior direito da área do editor de códigos. Repare bem, pois há uma setinha escura que revelará duas opções de Source (execução do script): Source, e Source With Echo. A diferença entre as duas opções é que a primeira executa mas não exibe as respostas no console, já a segunda executa mostrando as respostas no mesmo. A primeira opção será útil em outros casos de scripts muito grandes, ou em situações nas quais não convenha “poluir” o console com um monte de mensagens.
+
+Há um atalho de teclado para o Source: ctrl + shift + enter. Aprenda este atalho, pois você usará muito mais o editor de códigos do que o console para executar os passos da sua análise.
+
+Agora posicione o cursor do mouse com um clique em apenas um dos comandos do seu script. Em seguida, clique no ícone Run, também no canto superior na área do editor de códigos. Repare que, dessa vez, o R executou apenas um comando, aquele que estava na linha selecionada. Esse tipo de execução também é bastante útil, mas esteja atento, pois é muito comum que comandos em sequência dependam da execução de comandos anteriores para funcionarem corretamente.
+
+Há, também, um atalho de teclado para o Run: ctrl + enter. Este é outro comando importante de ser lembrado, pois é muito importante e será muito utilizado.
+
+2.2.1 Salvando Scripts
+Ao digitar seus comandos no console, o máximo que você consegue recuperar são os comandos imediatamente anteriores, usando a seta para cima. Já no editor de códigos, existe a possibilidade de salvar os seus scripts para continuar em outro momento ou em outro computador, preservar trabalhos passados ou compartilhar seus códigos com a equipe.
+
+Um script em R tem a extensão (terminação) .R. Se você tiver o RStudio instalado e der dois clicks em um arquivo com extesão .R, o windows abrirá esse arquivo diretamente no RStudio.
+
+Ainda utilizando os comandos digitados no editor de códigos, vá em File > Save, escolha um local e um nome para seu script e confirme no botão Save. Lembre-se sempre de ser organizado na hora de armazenar os seus arquivos. Utilize pastas para os diferentes projetos e dentro delas escolha nomes explicativos para os seus trabalhos. Para salvar mais rapidamente, utilize o atalho ctrl + S.
+
+2.2.2 Comentários de Código
+Ao utilizar o símbolo # em uma linha, você está dizendo para o R ignorar aquela linha, pois trata-se de um comentário.
+
+Clique na primeira linha do seu script, aperte enter para adicionar uma linha a mais e digite # Meu primeiro comentário de código!. Repare que a cor do comentário é diferente. Execute novamente seu script com o Source (ctrl + shift + enter) e veja que nada mudou na execução. A título de experimento, retire o símbolo # e mantenha o texto do comentário. Execute novamente. O R tenta interpretar essa linha como comando e já que ele não consegue entendê-lo, exibe uma mensagem de erro no console.
+
+O símbolo de comentário também é muito útil para suprimir linhas de código que servem para testar determinados comportamentos. Para exemplificar, adicione o símbolo # em qualquer uma das linhas com as operações e veja que ela não será mais executada, será ignorada, pois foi entendida pelo R como um simples comentário de código.
+
+2.3 Objetos (Variáveis)
+Para que o R deixe de ser uma simples calculadora, será necessário aprender, dentre outras coisas, o uso de variáveis. Se você tem alguma noção de estatística, provavelmente já tem a intuição do que é uma variável para uma linguagem de programação. No contexto do R, vamos entender variável como um objeto, ou seja, como uma estrutura predefinida que vai “receber” algum valor. Utilizando uma linguagem mais técnica, objeto (ou variável) é um pequeno espaço na memória do seu computador onde o R armazenará um valor ou o resultado de um comando, utilizando um nome que você mesmo definiu.
+
+Conhecer os tipos de objetos do R é fundamental. Para criar objetos, utiliza-se o símbolo <-. Este provavelmente é o símbolo que você mais verá daqui para frente.
+
+Execute, no console ou no editor de códigos, o seguinte comando x <- 15. Pronto, agora o nome x representa o valor 15. Para comprovar, execute apenas o nome do objeto x, o R mostrará o conteúdo dele. A partir de então, você poderá utilizar esse objeto como se fosse o valor 15. Experimente os seguintes resultados:
+
+x + 5
+x * x / 2
+2 ^ x
+y <- x / 3
+Dê uma boa lida em Dicas e boas práticas para um código organizado para aprender a organizar seus objetos e funções da melhor maneira possível.
+
+Todos os objetos que você criar estarão disponíveis na aba Environment.
+
+O RStudio possui a função auto complete. Digite as primeiras letras de um objeto (ou função) que você criou e, em seguida, use o atalho ctrl + barra de espaço. O RStudio listará tudo que começar com essas letras no arquivo. Selecione algum item e aperte enter para escrevê-lo no editor de códigos.
+
+2.4 Funções
+Entenda função como uma sequência de comandos preparados para serem usados de forma simples e, assim, facilitar sua vida. Funções são usadas para tudo que você possa imaginar: cálculos mais complexos, estatística, análise de dados, manipulação de dados, gráficos, relatórios etc. Assim que você o instala, o R já vem configurado com várias funções prontas para uso. A partir de agora, chamaremos esse conjunto de funções que já vem por padrão com o R de R Base.
+
+Claro que as funções do R base não serão suficientes para resolver todos os problemas que você encontrará pela frente. Nesse sentido, o R também mostra outro ponto forte. Você pode instalar conjuntos extras de funções específicas de maneira muito simples: usando pacotes.
+
+Funcões do R base.
+
+raiz.quadrada <- sqrt(16) # função para calcular raiz quadrada
+
+round(5.3499999, 2) # função para arredondamento
+Uma função tem dois elementos básicos: o nome e o(s) parâmetro(s) (também chamados de argumentos). Por exemplo, a função log(10) possui o nome log() e apenas um parâmetro, que é o número que você quer calcular o log. Já a função round() possui dois parâmetros, o número que você quer arredondar e a quantidade de dígitos para arredondamento.
+
+Quando você usa uma função, você pode informar os parâmetros de duas formas: sequencialmente, sem explicitar o nome dos parâmetros, ou na ordem que quiser, explicitando o nome dos parâmetros. Veja o exemplo a seguir:
+
+round(5.3499999, 2)
+# o mesmo que:
+round(digits = 2, x = 5.3499999)
+Para saber como informar os parâmetros corretamente, utilize o comando ? (ou coloque o cursor no nome da função e pressione F1) para ver a documentação de funções, ou seja, conhecer para que serve, entender cada um dos seus parâmetros e ver exemplos de uso.
+
+?round
+?rnorm
+??inner_join # procurar ajuda de funções que não estão "instaladas" ainda
+Vale comentar que é possível informar objetos nos parâmetros das funções.
+
+x <- 3.141593
+round(x, 3)
+## [1] 3.142
+ceiling(x)
+## [1] 4
+floor(x)
+## [1] 3
+Observe algumas das principais funções para estatísticas básicas no R:
+
+Função R	Estatística
+sum()	Soma de valores
+mean()	Média
+var()	Variância
+median()	Mediana
+summary()	Resumo Estatístico
+quantile()	Quantis
+2.5 Pacotes
+Como dito antes, pacotes são conjuntos extras de funções que podem ser instalados além do R base. Existem pacotes para auxiliar as diversas linhas de estudo que você possa imaginar: estatística, econometria, ciências sociais, medicina, biologia, gráficos, machine learning etc.
+
+Caso você precise de algum pacote específico, procure no Google pelo tema que necessita. Você encontrará o nome do pacote e o instalará normalmente.
+
+Nesse link você pode ver uma lista de todos os pacotes disponíveis no repositório central. Além desses, ainda existe a possibilidade de instalar-se pacotes “não oficiais,” que ainda não fazem parte de um repositório central.
+
+Para instalar um pacote, execute o seguinte comando:
+
+install.packages("dplyr") # instala um famoso pacote de manipulação de dados
+Uma vez instalado, esse pacote estará disponível para uso sempre que quiser, sem a necessidade de instalá-lo novamente. Mas, sempre que iniciar um código novo, você precisará carregá-lo na memória. Para isso, use o seguinte comando:
+
+library(dplyr)
+Para instalar um pacote, você precisa informar o nome entre aspas install.packages(“readxl”), caso contrário o pacote não funcionará. Porém, para carregar o pacote em memória, você pode usar com ou sem aspas library(readxl) ou library(“readxl”), ambas as formas funcionam.
+
+2.6 Boas práticas
+Rapidamente você perceberá que quanto mais organizado e padronizado mantiverem-se os seus códigos, melhor para você e para sua equipe.
+
+Existem dois guias de boas práticas bastante famosos na comunidade do R. Um sugerido pelo Hadley Wickham e outro por uma equipe do Google.
+
+Dentre as dicas de boa prática, algumas são mais importantes, como, por exemplo: não use acentos e caracteres especiais. Outro ponto importante: o R não aceita variáveis que comecem com números. Você pode até usar números no meio do nome, mas nunca começar com números.
+
+O principal de tudo é: seja qual for o padrão que você preferir, escolha apenas um padrão e seja consistente a ele.
+
+Guia sugerido Hadley Wickham: http://adv-r.had.co.nz/Style.html
+_ Guia sugerido pelo Google: https://google.github.io/styleguide/Rguide.xml
+
+2.7 Tidyverse
+Como já dito, eventualmente as funções do R base não são suficientes ou simplesmente não fornecem a maneira mais fácil de resolver-se um problema. Neste curso utilizaremos o Tidyverse: uma coleção de pacotes R cuidadosamente desenhados para atuarem no workflow comum da ciência de dados: importação, manipulação, exploração e visualização de dados. Uma vez carregado, esse pacote disponibiliza todo o conjunto de ferramentas de outros pacotes importantes: ggplot2, tibble, tidyr, readr, purrr e dplyr. Oportunamente, detalharemos cada um deles.
+
+O Tidyverse foi idealizado, dentre outros responsáveis, por Hadley Wickham, um dos maiores colaboradores da comunidade R. Se você não o conhece e pretende seguir em frente com o R, certamente ouvirá falar muito dele. Recomendamos segui-lo nas redes sociais para ficar por dentro das novidades do Tidyverse.
+
+Para instalar os pacotes do Tidyverse, rode o comando abaixo:
+
+install.packages("tidyverse")
+2.8 Exercícios
+Quais as principais diferenças entre um script e o console?
+
+Digite ?dplyr. O que acontece? E se digitar ??dplyr? Para que serve esse pacote?
+
+Para que serve a função rnorm()? Quais os seus parâmetros/atributos?
+
+Para que serve a função rm()? Quais os seus parâmetros/atributos?
+
+Rode o comando abaixo para instalar os pacotes usados neste livro:
+
+
+install.packages(c("broom", "choroplethrMaps", "DT", "dygraphs",
+                   "gapminder",  "ggrepel",
+                   "ggthemes", "gridExtra", "hrbrthemes", "htmltools", "ISLR",
+                   "jsonlite", "knitr", "leaflet", "ModelMetrics",
+                   "nycflights13", "plotly", "RColorBrewer",  "readxl",
+                   "scales", "randomForest", 'rpart.plot', "car", "caret",
+                   "titanic", "viridis", "WDI", "xtable", "xts", "sf",
+                   "sessioninfo"))
+
+
+
+3 Lendo os dados
+Após o entendimento do problema/projeto que se resolverá com a ciência de dados, será necessário fazer com que o R leia os dados. Seja lá qual for o assunto do projeto, é muito importante garantir uma boa fonte de dados. Dados ruins, inconsistentes, não confiáveis ou mal formatados podem gerar muita dor de cabeça para o analista.
+
+3.1 Tipos de Estrutura dos Dados
+Os dados podem ser apresentados de diversas maneiras, não existe um padrão único para a difusão ou divulgação. Sendo assim, é bom que você esteja preparado para lidar com qualquer tipo de estrutura de dados.
+
+Existem diversas classificações de estrutura de dados. Vamos utilizar uma classificação mais generalista, que diz respeito a como os dados são disponibilizados. Sendo assim, podemos classificar os dados em três grandes tipos quanto à sua estrutura ou forma: dados estruturados, semiestruturados e não estruturados.
+
+3.1.1 Dados Estruturados
+Talvez seja o formato de dados mais fácil de se trabalhar no R. São conjuntos de informações organizadas em colunas (atributos, variáveis, features etc.) e linhas (registros, itens, observações etc.). São dados mais comumente encontrados diretamente em bancos de dados, arquivos com algum tipo de separação entre as colunas, Excel, arquivos com campos de tamanho fixo etc.
+
+3.1.2 Dados Não Estruturados
+Como o nome diz, estes dados não têm uma estrutura previsível, ou seja, cada conjunto de informações possui uma forma única. Geralmente são arquivos com forte teor textual. Não podemos dizer que são dados “desorganizados,” e sim que são organizações particulares para cada conjunto de informações. Podemos citar, por exemplo, e-mails, twitters, PDF, imagens, vídeos etc.
+
+Analisar este tipo de dado é muito mais complexo e exige conhecimento avançado em mineração de dados. Apesar disso, é o tipo de dado mais abundante na realidade.
+
+3.1.3 Dados Semiestruturados
+São dados que também possuem uma organização fixa, porém não seguem o padrão de estrutura linha/coluna, ou seja, seguem uma estrutura mais complexa e flexível, geralmente hierárquica, estruturada em tags ou marcadores de campos. São exemplos de arquivos semiestruturados: JSON, XML, HTML, YAML etc. É o formato mais usado em troca de dados pela internet e consumo de Application programming interface (API). Dados semiestruturados, algumas vezes, são facilmente transformados em dados estruturados.
+
+3.2 Definindo o Local dos Dados
+O R sempre trabalha com o conceito de Working direcotry, ou seja, uma pasta de trabalho onde vai “ler” e “escrever” os dados. Para verificar qual o diretório que o R está “olhando,” utilize o seguinte comando:
+
+getwd() #Get Working Directory
+Para informar ao R em qual pasta ele deve ler os arquivos, utilizamos o comando set working directory, que muda o diretório padrão do R para leitura e escrita:
+
+setwd('D:/caminho/do/arquivo/arquivo.csv')
+3.3 Pacote para leitura dos dados
+O R base possui funções para a leitura dos principais tipos de arquivos. Um outro pacote específico, e muito bom para isso, é o readr. O Tidyverse inclui o carregamento do pacote readr.
+
+Diversos tipos de arquivos são lidos pelo R: Comma-Separated Values (csv), Excel, arquivos separados por delimitadores, colunas de tamanho fixo etc. Talvez o tipo de arquivo (estruturado) mais comum hoje em dia, e mais simples de trabalhar, seja o csv. Começaremos a importar dados com arquivos csv.
+
+library(tidyverse) # já carrega o readr
+Vamos importar um csv chamado Ano-2020.csv.zip, que corresponde ao dataset de despesas pela Cota para Exercício da Atividade Parlamentar. Caso o arquivo esteja em seu working directory (getwd()), basta passar apenas o nome do arquivo para a função, caso contrário será necessário informar todo o caminho até a pasta do arquivo. Usamos o read_csv() para fazer isso.
+
+library(readr)
+df <- readr::read_csv2("dados/Ano-2020.csv")
+Esse comando carrega o conteúdo do arquivo Ano-2020.csv para o objeto (variável) df. Após o carregamento, começaremos a investigar o conteúdo desse objeto: os dados.
+
+O head e o tail são funções para ver a “cabeça” e o “rabo” dos seus dados, ou seja, o começo e o fim das amostras. É muito importante sempre observar a “aparência” dos dados após o carregamento. Essa observação ajuda a identificar erros básicos no carregamento, possibilitando ajustes o quanto antes, impedindo que esses erros se propaguem. Repare que na primeira linha temos os nomes das colunas e, em seguida, os registros.
+
+head(df)
+## # A tibble: 6 × 31
+##   txNomeParlamentar         cpf ideCadastro nuCarteiraParlamentar nuLegislatura sgUF  sgPartido codLegislatura numSubCota txtDescricao
+##   <chr>                   <dbl>       <dbl>                 <dbl>         <dbl> <chr> <chr>              <dbl>      <dbl> <chr>       
+## 1 LIDERANÇA DO DEMOCRATAS    NA          NA                    NA          2019 <NA>  <NA>                  56          4 CONSULTORIA…
+## 2 LIDERANÇA DO DEMOCRATAS    NA          NA                    NA          2019 <NA>  <NA>                  56          4 CONSULTORIA…
+## 3 LIDERANÇA DO DEMOCRATAS    NA          NA                    NA          2019 <NA>  <NA>                  56          4 CONSULTORIA…
+## 4 LIDERANÇA DO DEMOCRATAS    NA          NA                    NA          2019 <NA>  <NA>                  56          4 CONSULTORIA…
+## 5 LIDERANÇA DO DEMOCRATAS    NA          NA                    NA          2019 <NA>  <NA>                  56          5 DIVULGAÇÃO …
+## 6 LIDERANÇA DO DEMOCRATAS    NA          NA                    NA          2019 <NA>  <NA>                  56          5 DIVULGAÇÃO …
+## # … with 21 more variables: numEspecificacaoSubCota <dbl>, txtDescricaoEspecificacao <chr>, txtFornecedor <chr>,
+## #   txtCNPJCPF <chr>, txtNumero <chr>, indTipoDocumento <dbl>, datEmissao <dttm>, vlrDocumento <chr>, vlrGlosa <chr>,
+## #   vlrLiquido <chr>, numMes <dbl>, numAno <dbl>, numParcela <dbl>, txtPassageiro <chr>, txtTrecho <chr>, numLote <dbl>,
+## #   numRessarcimento <dbl>, vlrRestituicao <lgl>, nuDeputadoId <dbl>, ideDocumento <dbl>, urlDocumento <chr>
+tail(df)
+## # A tibble: 6 × 31
+##   txNomeParlamentar         cpf ideCadastro nuCarteiraParlamentar nuLegislatura sgUF  sgPartido codLegislatura numSubCota txtDescricao
+##   <chr>                   <dbl>       <dbl>                 <dbl>         <dbl> <chr> <chr>              <dbl>      <dbl> <chr>       
+## 1 Jorge Goetten     43927998915      214694                   563          2019 SC    PL                    56          9 PASSAGEM AÉ…
+## 2 Jorge Goetten     43927998915      214694                   563          2019 SC    PL                    56          9 PASSAGEM AÉ…
+## 3 Jorge Goetten     43927998915      214694                   563          2019 SC    PL                    56         10 TELEFONIA   
+## 4 Jorge Goetten     43927998915      214694                   563          2019 SC    PL                    56         11 SERVIÇOS PO…
+## 5 Jorge Goetten     43927998915      214694                   563          2019 SC    PL                    56         11 SERVIÇOS PO…
+## 6 Jorge Goetten     43927998915      214694                   563          2019 SC    PL                    56         11 SERVIÇOS PO…
+## # … with 21 more variables: numEspecificacaoSubCota <dbl>, txtDescricaoEspecificacao <chr>, txtFornecedor <chr>,
+## #   txtCNPJCPF <chr>, txtNumero <chr>, indTipoDocumento <dbl>, datEmissao <dttm>, vlrDocumento <chr>, vlrGlosa <chr>,
+## #   vlrLiquido <chr>, numMes <dbl>, numAno <dbl>, numParcela <dbl>, txtPassageiro <chr>, txtTrecho <chr>, numLote <dbl>,
+## #   numRessarcimento <dbl>, vlrRestituicao <lgl>, nuDeputadoId <dbl>, ideDocumento <dbl>, urlDocumento <chr>
+Outros comandos muito importantes para começar a investigar os dados são o str(), o class() e o summary().
+
+Para verificar o tipo do objeto, ou seja, sua classe, utilize:
+
+class(df)
+## [1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame"
+Já para verificar a estrutura do objeto, ou seja, seus campos (quando aplicável), insira:
+
+glimpse(df) #STRucture
+## Rows: 144,367
+## Columns: 31
+## $ txNomeParlamentar         <chr> "LIDERANÇA DO DEMOCRATAS", "LIDERANÇA DO DEMOCRATAS", "LIDERANÇA DO DEMOCRATAS", "LIDERANÇA DO…
+## $ cpf                       <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ ideCadastro               <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ nuCarteiraParlamentar     <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ nuLegislatura             <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019…
+## $ sgUF                      <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ sgPartido                 <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ codLegislatura            <dbl> 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56…
+## $ numSubCota                <dbl> 4, 4, 4, 4, 5, 5, 5, 5, 12, 12, 12, 13, 13, 13, 13, 13, 13, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+## $ txtDescricao              <chr> "CONSULTORIAS, PESQUISAS E TRABALHOS TÉCNICOS.", "CONSULTORIAS, PESQUISAS E TRABALHOS TÉCNICOS…
+## $ numEspecificacaoSubCota   <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ txtDescricaoEspecificacao <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ txtFornecedor             <chr> "LINEAR COMUNICACAO LTDA - EPP", "LINEAR COMUNICACAO LTDA - EPP", "LINEAR COMUNICACAO LTDA - E…
+## $ txtCNPJCPF                <chr> "109.472.430/0019-5", "109.472.430/0019-5", "109.472.430/0019-5", "109.472.430/0019-5", "109.4…
+## $ txtNumero                 <chr> "2737", "2764", "2809", "2908", "2786", "2833", "2856", "2934", "45375674408", "2714", "2880",…
+## $ indTipoDocumento          <dbl> 4, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0…
+## $ datEmissao                <dttm> 2020-04-27 00:00:00, 2020-05-27 00:00:00, 2020-07-27 00:00:00, 2020-11-26 01:00:00, 2020-06-2…
+## $ vlrDocumento              <chr> "1527.28", "1527.28", "1527.28", "1527.28", "1527.28", "1527.28", "1527.28", "1527.28", "613.6…
+## $ vlrGlosa                  <chr> "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "20", "0", "0", "0", "0", "0", "0"…
+## $ vlrLiquido                <chr> "1527.28", "1527.28", "1527.28", "1527.28", "1527.28", "1527.28", "1527.28", "1527.28", "613.6…
+## $ numMes                    <dbl> 4, 5, 7, 11, 6, 8, 9, 12, 2, 3, 10, 7, 12, 9, 7, 7, 12, 10, 1, 1, 3, 4, 6, 7, 8, 12, 5, 9, 9, …
+## $ numAno                    <dbl> 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020…
+## $ numParcela                <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ txtPassageiro             <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ txtTrecho                 <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ numLote                   <dbl> 1693866, 1698547, 1709149, 1730495, 1703569, 1714269, 1720322, 1738558, 1692485, 1689241, 1724…
+## $ numRessarcimento          <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ vlrRestituicao            <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ nuDeputadoId              <dbl> 2713, 2713, 2713, 2713, 2713, 2713, 2713, 2713, 2713, 2713, 2713, 2713, 2713, 2713, 2713, 2713…
+## $ ideDocumento              <dbl> 7050172, 7058437, 7078508, 7123566, 7067718, 7088718, 7101137, 7140186, 7047615, 7042111, 7109…
+## $ urlDocumento              <chr> "http://camara.leg.br/cota-parlamentar/nota-fiscal-eletronica?ideDocumentoFiscal=7050172", "ht…
+Para verificar estatísticas básicas do objeto (média, mediana, quantis, mínimo, máximo etc.), quando aplicáveis:
+
+summary(df)
+##  txNomeParlamentar       cpf             ideCadastro     nuCarteiraParlamentar nuLegislatura      sgUF          
+##  Length:144367      Min.   :1.609e+06   Min.   : 62881   Min.   :  1           Min.   :2019   Length:144367     
+##  Class :character   1st Qu.:6.630e+09   1st Qu.:143084   1st Qu.:165           1st Qu.:2019   Class :character  
+##  Mode  :character   Median :2.194e+10   Median :178966   Median :297           Median :2019   Mode  :character  
+##                     Mean   :3.220e+10   Mean   :168038   Mean   :292           Mean   :2019                     
+##                     3rd Qu.:5.143e+10   3rd Qu.:204455   3rd Qu.:429           3rd Qu.:2019                     
+##                     Max.   :9.990e+10   Max.   :214694   Max.   :566           Max.   :2019                     
+##                     NA's   :391         NA's   :390      NA's   :390                                            
+##   sgPartido         codLegislatura   numSubCota    txtDescricao       numEspecificacaoSubCota txtDescricaoEspecificacao
+##  Length:144367      Min.   :56     Min.   :  1.0   Length:144367      Min.   :0.0000          Length:144367            
+##  Class :character   1st Qu.:56     1st Qu.:  3.0   Class :character   1st Qu.:0.0000          Class :character         
+##  Mode  :character   Median :56     Median :  5.0   Mode  :character   Median :0.0000          Mode  :character         
+##                     Mean   :56     Mean   :116.3                      Mean   :0.2819                                   
+##                     3rd Qu.:56     3rd Qu.: 14.0                      3rd Qu.:1.0000                                   
+##                     Max.   :56     Max.   :999.0                      Max.   :4.0000                                   
+##                                                                                                                        
+##  txtFornecedor       txtCNPJCPF         txtNumero         indTipoDocumento   datEmissao                  vlrDocumento      
+##  Length:144367      Length:144367      Length:144367      Min.   :0.000    Min.   :2019-11-25 00:00:00   Length:144367     
+##  Class :character   Class :character   Class :character   1st Qu.:0.000    1st Qu.:2020-03-04 00:00:00   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Median :0.000    Median :2020-06-23 00:00:00   Mode  :character  
+##                                                           Mean   :1.009    Mean   :2020-06-21 23:00:20                     
+##                                                           3rd Qu.:1.000    3rd Qu.:2020-10-01 00:00:00                     
+##                                                           Max.   :4.000    Max.   :2021-02-03 00:00:00                     
+##                                                                            NA's   :5892                                    
+##    vlrGlosa          vlrLiquido            numMes           numAno       numParcela       txtPassageiro       txtTrecho        
+##  Length:144367      Length:144367      Min.   : 1.000   Min.   :2020   Min.   :0.000000   Length:144367      Length:144367     
+##  Class :character   Class :character   1st Qu.: 3.000   1st Qu.:2020   1st Qu.:0.000000   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Median : 6.000   Median :2020   Median :0.000000   Mode  :character   Mode  :character  
+##                                        Mean   : 6.128   Mean   :2020   Mean   :0.000194                                        
+##                                        3rd Qu.: 9.000   3rd Qu.:2020   3rd Qu.:0.000000                                        
+##                                        Max.   :12.000   Max.   :2020   Max.   :1.000000                                        
+##                                                                                                                                
+##     numLote        numRessarcimento vlrRestituicao  nuDeputadoId   ideDocumento     urlDocumento      
+##  Min.   :      0   Min.   :0        Mode:logical   Min.   :  74   Min.   :      0   Length:144367     
+##  1st Qu.:1673118   1st Qu.:0        NA's:144367    1st Qu.:2301   1st Qu.:7007282   Class :character  
+##  Median :1697973   Median :0                       Median :3195   Median :7057354   Mode  :character  
+##  Mean   :1355186   Mean   :0                       Mean   :2776   Mean   :5782888                     
+##  3rd Qu.:1719478   3rd Qu.:0                       3rd Qu.:3323   3rd Qu.:7099364                     
+##  Max.   :1743675   Max.   :0                       Max.   :3473   Max.   :7150790                     
+##                    NA's   :114672
+Acontece que nem sempre o separador será o ;, típico do csv. Nesse caso será necessário usar o read_delim(), onde você pode informar qualquer tipo de separador. Outro tipo de arquivo bastante comum é o de colunas com tamanho fixo (fixed width), também conhecido como colunas posicionais. Nesse caso, será necessário usar o read_fwf() informando o tamanho de cada coluna.
+
+Exemplo:
+
+#lendo arquivo com delimitador #
+read_delim('caminho/do/arquivo/arquivo_separado_por#.txt', delim = '#')
+
+#lendo arquivo de coluna fixa
+#coluna 1 de tamanho 5, coluna 2 de tamanho 2 e coluna 3 de tamanho 10
+read_fwf('caminho/do/arquivo/arquivo_posicional.txt', col_positions = fwf_widths(c(5, 2, 10), c("col1", "col2", "col3")))
+No capítulo a seguir exploraremos melhor os tipos de objetos mais comuns no R.
